@@ -10,6 +10,7 @@ use App\Http\Resources\ReviewResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReviewRequest;
 
+
 class ReviewController extends Controller
 {
     /**
@@ -76,9 +77,12 @@ class ReviewController extends Controller
      * @param  \App\Model\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request,Product $product,Review $review)
     {
-        //
+        $review->update($request->all());
+        return response([
+            'data' => new ReviewResource($review)
+            ],Response::HTTP_CREATED);
     }
 
     /**
@@ -87,8 +91,9 @@ class ReviewController extends Controller
      * @param  \App\Model\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy(Product $product,Review $review)
     {
-        //
+        $review->delete();
+        return response(null,Response::HTTP_NO_CONTENT);  
     }
 }
