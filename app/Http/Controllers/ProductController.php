@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductCollection::collection(Product::paginate(10));
+        return ProductCollection::collection(Product::paginate(20));
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductController extends Controller
         $product->price=$request->price;
         $product->stock=$request->stock;
         $product->discount=$request->discount;    
-        $product->save();    
+        $request->user()->products()->save($product);   
         return response([
         'data' => new ProductResource($product)
         ],Response::HTTP_CREATED);  
